@@ -80,3 +80,4 @@ export const getJobsByUser = async (req, res, next) => {
         next(err);
     }
 }
+

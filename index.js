@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import jobsRoute from "./routes/jobs.js";
 import userRoute from "./routes/users.js";
+import subJobsRoute from "./routes/subjobs.js";
 
 const app = express();
 dotenv.config();
@@ -28,6 +29,7 @@ app.use(express.json());
 
 app.use("/jobs", jobsRoute)
 app.use("/users", userRoute)
+app.use("/subjobs", subJobsRoute)
 
 app.listen(8800, () => {
     connect();

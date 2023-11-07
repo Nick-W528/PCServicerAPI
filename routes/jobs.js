@@ -7,6 +7,7 @@ import {
     deleteJob,
     getJobsByUser,    
 } from "../controllers/jobs.js";
+import { isLoggedIn } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -21,6 +22,6 @@ router.get("/find/:id", getJob )
 //GET ALL 
 router.get("/", getAllJobs)
 //GET JOBS BY ID
-router.get("/:id", getJobsByUser)
+router.get("/:id", isLoggedIn, getJobsByUser)
 
 export default router

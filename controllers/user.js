@@ -65,6 +65,8 @@ export const loginUser = async(req, res, next) => {
                 }
             );
 
+            console.log(token);
+
             user.token = token;
 
             res.status(200).send('User Login Successful');
@@ -73,5 +75,15 @@ export const loginUser = async(req, res, next) => {
         }        
     } catch (err) {
         console.log(err);
+    }
+}
+
+export const currentUser = async(req, res, next) => {
+    try {
+        const user = await User.findById(req.user._id).select("-password -__v");
+        res.send(user);
+    } catch (err) {
+        console.log(err);
+        res.send("An error occured");
     }
 }

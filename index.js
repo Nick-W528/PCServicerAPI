@@ -4,8 +4,12 @@ import mongoose from "mongoose";
 import jobsRoute from "./routes/jobs.js";
 import userRoute from "./routes/users.js";
 import subJobsRoute from "./routes/subjobs.js";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 
 const app = express();
+app.use(bodyParser.json())
 dotenv.config();
 
 const connect = async () => {
@@ -25,7 +29,14 @@ mongoose.connection.on("disconnected", () => {
 app.get("/", (req, res) => {
     res.send("hello first request");
 })
+
 app.use(express.json());
+app.use(cookieParser());
+app.use(cors({
+    credentials: true,
+    origin: 'http://localhost:3000',
+}));
+
 
 app.use("/jobs", jobsRoute)
 app.use("/users", userRoute)

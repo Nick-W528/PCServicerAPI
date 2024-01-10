@@ -53,7 +53,7 @@ export const loginUser = async(req, res, next) => {
             res.status(400).send("All inputs are required");
         }
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email });        
 
         if (user && (await bcrypt.compare(password, user.password))) {
             // Create Token
@@ -63,13 +63,14 @@ export const loginUser = async(req, res, next) => {
                 {
                     expiresIn: "2hr",
                 }
-            );
-
-            console.log(token);
-
+            );                        
+            
             user.token = token;
+            await User.findOneAndUpdate({email}, {token: token})            
+            
+            res.status(200)
+            .send(user);            
 
-            res.status(200).send('User Login Successful');
         } else {
             res.status(400).send("Invalid Credentials");
         }        
@@ -79,9 +80,16 @@ export const loginUser = async(req, res, next) => {
 }
 
 export const currentUser = async(req, res, next) => {
-    try {
-        const user = await User.findById(req.user._id).select("-password -__v");
-        res.send(user);
+    try {        
+        let token;
+        const header = req.headers['authorization'];
+
+        if (header) {
+            token = header.split(' ')[1];            
+
+            const user = await User.findOne({ token: token });                
+            res.send(user);
+        }                
     } catch (err) {
         console.log(err);
         res.send("An error occured");

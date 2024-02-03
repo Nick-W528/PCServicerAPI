@@ -6,7 +6,8 @@ export const createJob = async(req, res, next) => {
         userId: req.body.userId,
         status: req.body.status,
         type: req.body.type,
-        description: req.body.description
+        description: req.body.description,
+        createdAt: Date.now(),
     });                    
 
     const subJobItems = req.body.subJobs;          

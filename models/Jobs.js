@@ -22,6 +22,12 @@ const JobSchema = new mongoose.Schema(
             type: String,
             required: true,
         },        
+        createdAt: {
+            type: Date,
+        },
+        estimatedCompletion: {
+            type: Date,
+        },
         subJobs: [
             { type: Schema.Types.ObjectId, ref: "SubJob" }
         ]            

@@ -82,3 +82,12 @@ export const getJobsByUser = async (req, res, next) => {
     }
 }
 
+export const getJobsByDueDate = async (req, res, next) => {
+    try {        
+        const jobsByDate = await jobs.job.find({ dueDate: req.params.dueDate, userId: req.params.id})        
+        res.status(200).json(jobsByDate);
+    } catch (err) {        
+        next(err);
+    }
+}
+

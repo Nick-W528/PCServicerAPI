@@ -5,7 +5,8 @@ import {
     getAllJobs,
     updateJob,
     deleteJob,
-    getJobsByUser,    
+    getJobsByUser,
+    getJobsByDueDate,    
 } from "../controllers/jobs.js";
 import { isLoggedIn } from "../middleware/auth.js";
 
@@ -23,5 +24,7 @@ router.get("/find/:id", getJob )
 router.get("/", getAllJobs)
 //GET JOBS BY ID
 router.get("/:id", isLoggedIn, getJobsByUser)
+//GET JOBS BY DUE DATE
+router.get("/:id/date/:dueDate", getJobsByDueDate)
 
 export default router
